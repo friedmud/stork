@@ -12,30 +12,28 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COUPLINGKERNEL_H
-#define COUPLINGKERNEL_H
-
-#include "Kernel.h"
-
-class CouplingKernel;
+#include "ValueCouplingKernel.h"
 
 template<>
-InputParameters validParams<CouplingKernel>();
-
-/**
- * Kernel that is calling coupledDot
- */
-class CouplingKernel : public Kernel
+InputParameters validParams<ValueCouplingKernel>()
 {
-public:
-  CouplingKernel(const std::string & name, InputParameters parameters);
-  virtual ~CouplingKernel();
+  InputParameters params = validParams<Kernel>();
+  params.addCoupledVar("v", "Variable being coupled");
+  return params;
+}
 
-protected:
-  virtual Real computeQpResidual();
+ValueCouplingKernel::ValueCouplingKernel(const std::string & name, InputParameters parameters) :
+    Kernel(name, parameters),
+    _v(coupledValue("v"))
+{
+}
 
-  VariableValue & _v;
-};
+ValueCouplingKernel::~ValueCouplingKernel()
+{
+}
 
-
-#endif /* COUPLINGKERNEL_H */
+Real
+ValueCouplingKernel::computeQpResidual()
+{
+  return _v[_qp];
+}
