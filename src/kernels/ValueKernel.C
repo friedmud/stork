@@ -12,28 +12,32 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "ValueCouplingKernel.h"
+#include "ValueKernel.h"
 
 template<>
-InputParameters validParams<ValueCouplingKernel>()
+InputParameters validParams<ValueKernel>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addCoupledVar("v", "Variable being coupled");
   return params;
 }
 
-ValueCouplingKernel::ValueCouplingKernel(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
-    _v(coupledValue("v"))
+ValueKernel::ValueKernel(const std::string & name, InputParameters parameters) :
+    Kernel(name, parameters)
 {
 }
 
-ValueCouplingKernel::~ValueCouplingKernel()
+ValueKernel::~ValueKernel()
 {
 }
 
 Real
-ValueCouplingKernel::computeQpResidual()
+ValueKernel::computeQpResidual()
 {
-  return -_v[_qp];
+  return -_test[_i][_qp]*_u[_qp];
+}
+
+Real
+ValueKernel::computeQpJacobian()
+{
+  return -_test[_i][_qp]*_phi[_j][_qp];
 }

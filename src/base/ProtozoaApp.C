@@ -3,6 +3,9 @@
 #include "AppFactory.h"
 #include "ModulesApp.h"
 
+#include "ValueKernel.h"
+#include "ValueCouplingKernel.h"
+
 template<>
 InputParameters validParams<ProtozoaApp>()
 {
@@ -37,6 +40,8 @@ ProtozoaApp::registerApps()
 void
 ProtozoaApp::registerObjects(Factory & factory)
 {
+  registerKernel(ValueKernel);
+  registerKernel(ValueCouplingKernel);
 }
 
 void
