@@ -60,25 +60,25 @@
   l_max_its = 300
   solve_type = PJFNK
   l_tol = 1e-4
-  end_time = 20.0
+  end_time = 30.0
   scheme = bdf2
 
-  #[./TimeStepper]
-  #  type = IterationAdaptiveDT
-  #  dt = 0.1 #Initial time step
-  #  growth_factor = 1.5 #Maximum about by which the time step and increase each step
-  #  optimal_iterations = 60 #Time step will change to maintain this number of nonlinear iterations
-  #[../]
+  [./TimeStepper]
+    type = IterationAdaptiveDT
+    dt = 0.1 #Initial time step
+    growth_factor = 1.2 #Maximum about by which the time step and increase each step
+    optimal_iterations = 6 #Time step will change to maintain this number of nonlinear iterations
+  [../]
 
-  #[./Adaptivity]
-  #  # Block that turns on mesh adaptivity. Note that mesh will never coarsen beyond initial mesh (before uniform refinement)
-  #  initial_adaptivity = 3 # Number of times mesh is adapted to initial condition
-  #  refine_fraction = 0.7 # Fraction of high error that will be refined
-  #  coarsen_fraction = 0.05 # Fraction of low error that will coarsened
-  #  max_h_level = 4 # Max number of refinements used, starting from initial mesh (before uniform refinement)
-  #  weight_names = 'h v' #This combo of values makes the mesh adapt to c but not w
-  #  weight_values = '1.0 0.0'
-  #[../]
+  [./Adaptivity]
+    # Block that turns on mesh adaptivity. Note that mesh will never coarsen beyond initial mesh (before uniform refinement)
+    initial_adaptivity = 3 # Number of times mesh is adapted to initial condition
+    refine_fraction = 0.7 # Fraction of high error that will be refined
+    coarsen_fraction = 0.05 # Fraction of low error that will coarsened
+    max_h_level = 4 # Max number of refinements used, starting from initial mesh (before uniform refinement)
+    weight_names = 'h v' #This combo of values makes the mesh adapt to c but not w
+    weight_values = '1.0 0.0'
+  [../]
 []
 
 [Outputs]
