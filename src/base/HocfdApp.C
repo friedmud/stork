@@ -13,8 +13,8 @@ InputParameters validParams<HocfdApp>()
 HocfdApp::HocfdApp(const std::string & name, InputParameters parameters) :
     MooseApp(name, parameters)
 {
-  srand(libMesh::processor_id());
-  
+  srand(processor_id());
+
   Moose::registerObjects(_factory);
   ModulesApp::registerObjects(_factory);
   HocfdApp::registerObjects(_factory);
